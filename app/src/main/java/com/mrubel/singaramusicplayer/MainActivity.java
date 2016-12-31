@@ -1,11 +1,16 @@
 package com.mrubel.singaramusicplayer;
 
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +22,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView songs;
+    ListView songs;
     ArrayList my_songs = new ArrayList();
     ArrayList song_loc = new ArrayList();
     MediaPlayer mediaPlayer = null;
@@ -27,27 +32,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        songs = (TextView) findViewById(R.id.songs);
+        songs = (ListView) findViewById(R.id.songs);
 
         mediaPlayer = new MediaPlayer();
 
         scanning_SD_card(Environment.getExternalStorageDirectory());
 
-
-        String s = "";
-        for(int i =0; i < my_songs.size(); i++){
-            s = s+(i+1)+". "+my_songs.get(i)+"\n\n";
-        }
-        songs.setText(s);
-
-        play_the_song(song_loc.get(4).toString());
-        Log.d("ufkc--off", "/storage/emulated/0/songs/AC_DC - T.N.T..mp3");
-        Log.d("ufkc--off", Environment.getExternalStorageDirectory().toString()+my_songs.get(2).toString());
        // Toast.makeText(this, "Playing.. "+ my_songs.get(2).toString(), Toast.LENGTH_SHORT).show();
 
-        Log.d("--my songs---", Arrays.toString(my_songs.toArray()));
-        Log.d("--my locc---", Arrays.toString(song_loc.toArray()));
+        songs.setAdapter(new ArrayAdapter(getApplicationContext(), R.layout.list_view_lay, R.id.solo_song, my_songs));
+        songs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+             play_the_song(song_loc.get(position)+"");
 
+                Toast.makeText(getApplicationContext(), "Playing Singara "+ my_songs.get(position), Toast.LENGTH_SHORT).show();
+
+                // changing bg color
+                for (int i = 0; i < songs.getChildCount(); i++) {
+                    if(position == i ){
+                        songs.getChildAt(i).setBackgroundColor(Color.parseColor("#E0E0E0"));
+                    }else{
+                        songs.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
+                    }
+                }
+
+            }
+        });
     }
 
 
@@ -55,21 +66,15 @@ public class MainActivity extends AppCompatActivity {
 
         File[] files = file.listFiles();
 
-        String loc = "";
-
         for( File f : files) {
 
             if(f.isDirectory()){
-                loc = loc+f.getName()+"/";
                 scanning_SD_card(f);
             } else {
 
                 if((f.getName().endsWith(".mp3")) || (f.getName().endsWith(".acc")) || (f.getName().endsWith(".wav"))){
-
-
                     my_songs.add(f.getName());
                     song_loc.add(f.getAbsolutePath());
-
                 }
 
             }
