@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList my_songs = new ArrayList();
     ArrayList song_loc = new ArrayList();
     MediaPlayer mediaPlayer = null;
+    int final_pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +37,39 @@ public class MainActivity extends AppCompatActivity {
 
         mediaPlayer = new MediaPlayer();
 
+        // fetching and getting songs from sd card to arraylist
         scanning_SD_card(Environment.getExternalStorageDirectory());
 
-       // Toast.makeText(this, "Playing.. "+ my_songs.get(2).toString(), Toast.LENGTH_SHORT).show();
-
+        // showing song list
         songs.setAdapter(new ArrayAdapter(getApplicationContext(), R.layout.list_view_lay, R.id.solo_song, my_songs));
+
+        // listview click
         songs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-             play_the_song(song_loc.get(position)+"");
 
+                final_pos = position;
+                play_the_song(song_loc.get(position)+"");
                 Toast.makeText(getApplicationContext(), "Playing Singara "+ my_songs.get(position), Toast.LENGTH_SHORT).show();
+
+                // plaing next song
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+
+                        // go to next in on completion
+                        if((final_pos+1) == my_songs.size()){
+                            play_the_song(song_loc.get(0)+"");
+                            Toast.makeText(getApplicationContext(), "Playing Singara "+ my_songs.get(0), Toast.LENGTH_SHORT).show();
+                            final_pos = 1;
+                        } else {
+                            play_the_song(song_loc.get(final_pos)+"");
+                            Toast.makeText(getApplicationContext(), "Playing Singara "+ my_songs.get(final_pos), Toast.LENGTH_SHORT).show();
+                            final_pos += 1;
+                        }
+                    }
+                });
+
 
                 // changing bg color
                 for (int i = 0; i < songs.getChildCount(); i++) {
