@@ -87,7 +87,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Feeling loved <3"
+                android:text="Feeling loved :*"
                 android:textAllCaps="false"
                 android:layout_margin="10dp"
                 android:background="@color/colorPrimary"
@@ -107,13 +107,15 @@
 
     </LinearLayout>
     <Button
+        android:id="@+id/justcasual"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Just go casual"
         android:textAllCaps="false"
         android:layout_margin="10dp"
         android:background="@color/colorAccent"
-        android:textColor="#fff"/>
+        android:textColor="#fff"
+        android:onClick="gocasual"/>
 
 
 </LinearLayout>
