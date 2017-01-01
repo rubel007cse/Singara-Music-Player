@@ -3,22 +3,18 @@ package com.mrubel.singaramusicplayer;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
                 final_pos = position;
                 play_the_song(song_loc.get(position)+"");
-                Toast.makeText(getApplicationContext(), "Playing Singara "+ my_songs.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Playing Singara "+ my_songs.get(position), Toast.LENGTH_LONG).show();
 
                 // plaing next song
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -60,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
                         // go to next in on completion
                         if((final_pos+1) == my_songs.size()){
                             play_the_song(song_loc.get(0)+"");
-                            Toast.makeText(getApplicationContext(), "Playing Singara "+ my_songs.get(0), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Playing Singara "+ my_songs.get(0), Toast.LENGTH_LONG).show();
                             final_pos = 1;
                         } else {
                             play_the_song(song_loc.get(final_pos)+"");
-                            Toast.makeText(getApplicationContext(), "Playing Singara "+ my_songs.get(final_pos), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Playing Singara "+ my_songs.get(final_pos), Toast.LENGTH_LONG).show();
                             final_pos += 1;
                         }
                     }

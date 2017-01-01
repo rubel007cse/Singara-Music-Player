@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_mood_selector"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hi, How are you feeling?"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:layout_marginTop="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="5">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Im cool B-)"
+                android:textAllCaps="false"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#fff"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Party Mood @_@"
+                android:textAllCaps="false"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#fff"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sleepy -_-"
+                android:textAllCaps="false"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#fff"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Uradhura :3"
+                android:textAllCaps="false"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#fff"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Upset :("
+                android:textAllCaps="false"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#fff"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bored"
+                android:textAllCaps="false"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#fff"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Feeling loved <3"
+                android:textAllCaps="false"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#fff"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I dont give a fuck .|."
+                android:textAllCaps="false"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#fff"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Just go casual"
+        android:textAllCaps="false"
+        android:layout_margin="10dp"
+        android:background="@color/colorAccent"
+        android:textColor="#fff"/>
+
+
+</LinearLayout>
