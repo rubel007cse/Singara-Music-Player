@@ -1,4 +1,4 @@
-package com.mrubel.singaramusicplayer;
+package com.mrubel.msplayer;
 
 import org.junit.Test;
 

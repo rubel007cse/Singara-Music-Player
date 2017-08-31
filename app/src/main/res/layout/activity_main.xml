@@ -5,34 +5,52 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4.5"
+        android:background="@drawable/albumart"
+        android:gravity="center">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradients"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar" />
+            <TextView
+                android:id="@+id/mytimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#fff"
+                android:text="0:00"/>
+
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
     <ListView
         android:id="@+id/songs"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_weight="5.5"
         android:divider="#fff"
         android:dividerHeight="3dp"
         />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:background="@color/colorAccent"
-        android:orientation="vertical">
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar" />
-        <TextView
-            android:id="@+id/mytimer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="#fff" />
-
-
-    </LinearLayout>
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.mrubel.singaramusicplayer;
+package com.mrubel.msplayer;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

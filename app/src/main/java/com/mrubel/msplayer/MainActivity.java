@@ -1,30 +1,44 @@
-package com.mrubel.singaramusicplayer;
+package com.mrubel.msplayer;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Looper;
+import android.os.ParcelFileDescriptor;
+import android.provider.BaseColumns;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
     ListView songs;
-    ArrayList my_songs = new ArrayList();
+    List<String> my_songs = new ArrayList<String>();
+    ArrayList<Bitmap> albumArts = new ArrayList<Bitmap>();
     ArrayList song_loc = new ArrayList();
     MediaPlayer mediaPlayer = null;
     int final_pos;
@@ -34,12 +48,17 @@ public class MainActivity extends AppCompatActivity {
     long song_duration;
     double duro;
     Timer timer;
-
+    ImageView albumAlt;
+    MediaMetadataRetriever metaRetriver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // rec intent
+        String get_mood = getIntent().getStringExtra("setMood");
+        Log.d("get_mood", get_mood);
 
         songs = (ListView) findViewById(R.id.songs);
         tv_timer = (TextView) findViewById(R.id.mytimer);
@@ -49,14 +68,27 @@ public class MainActivity extends AppCompatActivity {
 
         mediaPlayer = new MediaPlayer();
 
+        albumAlt = (ImageView) findViewById(R.id.albumart);
 
         // fetching and getting songs from sd card to arraylist
-        scanning_SD_card(Environment.getExternalStorageDirectory());
+       // scanning_SD_card(Environment.getExternalStorageDirectory());
+
+        Log.d("Loaded songs", ""+my_songs.toString());
 
         // showing song list
-        songs.setAdapter(new ArrayAdapter(getApplicationContext(), R.layout.list_view_lay, R.id.solo_song, my_songs));
+     /*   songs.setAdapter(new ArrayAdapter(MainActivity.this,
+                R.layout.list_view_lay,
+                R.id.solo_song, my_songs));
+*/
+        getSongList();
 
-        // listview click
+
+        String[] songsArray = my_songs.toArray(new String[my_songs.size()]);
+        Bitmap[] aartsArray = albumArts.toArray(new Bitmap[albumArts.size()]);
+
+        songs.setAdapter(new CustomAdapter(MainActivity.this, songsArray, aartsArray));
+
+        // list view click to play the song
         songs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -85,14 +117,6 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-                // changing bg color
-                for (int i = 0; i < songs.getChildCount(); i++) {
-                    if(position == i ){
-                        songs.getChildAt(i).setBackgroundColor(Color.parseColor("#E0E0E0"));
-                    }else{
-                        songs.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
-                    }
-                }
 
             }
         });
@@ -111,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
             } else {
 
                 if((f.getName().endsWith(".mp3")) || (f.getName().endsWith(".acc")) || (f.getName().endsWith(".wav"))){
+
+                  //  Log.d("Each song ", f.getName());
+
                     my_songs.add(f.getName());
                     song_loc.add(f.getAbsolutePath());
                 }
@@ -177,5 +204,77 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public Bitmap getAlbumart(Long album_id)
+    {
+        Bitmap bm = null;
+        try
+        {
+            final Uri sArtworkUri = Uri
+                    .parse("content://media/external/audio/albumart");
+
+            Uri uri = ContentUris.withAppendedId(sArtworkUri, album_id);
+
+            ParcelFileDescriptor pfd = getApplicationContext().getContentResolver()
+                    .openFileDescriptor(uri, "r");
+
+            if (pfd != null)
+            {
+                FileDescriptor fd = pfd.getFileDescriptor();
+                bm = BitmapFactory.decodeFileDescriptor(fd);
+            }
+        } catch (Exception e) {
+        }
+        return bm;
+    }
+
+    public void getSongList() {
+        // retrieve song info
+
+        ContentResolver musicResolver = getContentResolver();
+        Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        Cursor musicCursor = musicResolver.query(musicUri, null, null, null,
+                null);
+
+
+        if (musicCursor != null && musicCursor.moveToFirst()) {
+            // get columns
+            int titleColumn = musicCursor.getColumnIndex(MediaStore.MediaColumns.TITLE);
+            int idColumn = musicCursor.getColumnIndex(BaseColumns._ID);
+            int artistColumn = musicCursor.getColumnIndex(MediaStore.Audio.AudioColumns.ARTIST);
+            int column_index = musicCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA);
+
+            // add songs to list
+            do {
+                long thisId = musicCursor.getLong(idColumn);
+                String pathId = musicCursor.getString(column_index);
+                Log.d(this.getClass().getName(), "path id=" + pathId);
+                song_loc.add(pathId);
+
+                metaRetriver = new MediaMetadataRetriever();
+                metaRetriver.setDataSource(pathId);
+                try {
+                    byte[] art = metaRetriver.getEmbeddedPicture();
+                    BitmapFactory.Options opt = new BitmapFactory.Options();
+                    opt.inSampleSize = 2;
+                    Bitmap songImage = BitmapFactory.decodeByteArray(art, 0, art.length, opt);
+
+                   // albumAlt.setImageBitmap(songImage);
+                    albumArts.add(songImage);
+
+                } catch (Exception e) {
+                    //imgAlbumArt.setBackgroundColor(Color.GRAY);
+                }
+
+                String thisTitle = musicCursor.getString(titleColumn);
+                String thisArtist = musicCursor.getString(artistColumn);
+
+                Log.d("Song det: ", thisId + ", " + thisTitle + ", " + thisArtist);
+
+                my_songs.add(thisId + ", " + thisTitle + ", " + thisArtist);
+
+            } while (musicCursor.moveToNext());
+
+        }
+    }
 
 }
