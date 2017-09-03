@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SingaraMusicPlayer.iml" filepath="$PROJECT_DIR$/SingaraMusicPlayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Singara-Music-Player.iml" filepath="$PROJECT_DIR$/Singara-Music-Player.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
