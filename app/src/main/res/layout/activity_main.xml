@@ -8,20 +8,44 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4.5"
-        android:background="@drawable/albumart"
+        android:layout_weight="4.3"
+        android:background="@drawable/minar"
         android:gravity="center">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/gradients"/>
+            android:background="#AA000000"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_gravity="center">
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:layout_height="wrap_content"
+                    android:text="MS Player"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#fff"/>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="22dp"
+                    android:layout_weight="1"
+                    android:src="@android:drawable/ic_menu_search"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,12 +57,12 @@
                     android:layout_height="match_parent"
                     android:gravity="center">
 
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="bottom"
-                        android:src="@drawable/shuffleb"
                         android:background="@null"
+                        android:src="@drawable/shuffleb"
                     />
 
                 </LinearLayout>
@@ -55,14 +79,15 @@
                         android:text="I like the way you lie"
                         android:textColor="#fff"
                         android:gravity="center"
-                        android:textSize="22sp"/>
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Rihana"
-                        android:textColor="#fff"
-                        android:gravity="center" />
+                        android:textColor="#f9f9f9"
+                        android:gravity="center"
+                        android:textSize="12sp"/>
 
 
                 </LinearLayout>
@@ -79,7 +104,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:textColor="#fff"
-                        android:text="0:00"/>
+                        android:textSize="10sp"
+                        android:text="00:00/00:00"/>
 
                 </LinearLayout>
 
@@ -90,34 +116,29 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/progressBar" />
+                android:id="@+id/progressBar"
+                android:layout_margin="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
                 android:gravity="center">
 
-                <ImageButton
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/prevb"
-                    android:background="@null"
-                    android:layout_marginRight="75dp"
+                    android:src="@android:drawable/ic_media_previous"                    android:layout_marginRight="75dp"
                     />
 
-                <ImageButton
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/playb"
-                    android:background="@null"
-                    />
+                    android:src="@android:drawable/ic_media_play"                    />
 
-                <ImageButton
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/nextb"
-                    android:background="@null"
+                    android:src="@android:drawable/ic_media_next"
                     android:layout_marginLeft="75dp"
                     />
 
@@ -133,9 +154,9 @@
         android:id="@+id/songs"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5.5"
-        android:divider="#fff"
-        android:dividerHeight="3dp"
+        android:layout_weight="5.7"
+        android:divider="#bdc3c7"
+        android:dividerHeight="1dp"
         />
 
 

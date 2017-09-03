@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff">
+    android:background="@drawable/item_gradient">
 
 
     <ImageView
@@ -20,7 +20,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:background="#f9f9f9"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="#fff"/>
 
 </LinearLayout>

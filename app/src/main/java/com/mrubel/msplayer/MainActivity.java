@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.provider.BaseColumns;
@@ -53,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // to make full screen
+        // Making notification bar transparent
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
 
         // rec intent
         String get_mood = getIntent().getStringExtra("setMood");
@@ -163,6 +172,10 @@ public class MainActivity extends AppCompatActivity {
             // show this amount of progress in every second
             duro = (double) 100/ (song_duration/1000);
 
+            // for total time
+            final int seconds = (int) (song_duration / 1000) % 60 ;
+            final int minutes = (int) ((song_duration / (1000*60)) % 60);
+
 
             timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
@@ -179,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                                         time = (int) (song_duration/1000)-(mediaPlayer.getCurrentPosition()/1000);
                                         min = time/60;
                                         sec = time%60;
-                                        tv_timer.setText("Time Left: "+min+" : "+sec);
+                                        tv_timer.setText(addDigit(min)+":"+addDigit(sec)+"/"+addDigit(minutes)+":"+addDigit(seconds));
                                         res = (int)(duro*progress_t);
                                         progressBar.setProgress(res);
                                         Log.d("--pt---", res+"");
@@ -202,28 +215,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public Bitmap getAlbumart(Long album_id)
-    {
-        Bitmap bm = null;
-        try
-        {
-            final Uri sArtworkUri = Uri
-                    .parse("content://media/external/audio/albumart");
-
-            Uri uri = ContentUris.withAppendedId(sArtworkUri, album_id);
-
-            ParcelFileDescriptor pfd = getApplicationContext().getContentResolver()
-                    .openFileDescriptor(uri, "r");
-
-            if (pfd != null)
-            {
-                FileDescriptor fd = pfd.getFileDescriptor();
-                bm = BitmapFactory.decodeFileDescriptor(fd);
-            }
-        } catch (Exception e) {
-        }
-        return bm;
-    }
 
     public void getSongList() {
         // retrieve song info
@@ -272,6 +263,16 @@ public class MainActivity extends AppCompatActivity {
 
             } while (musicCursor.moveToNext());
 
+        }
+    }
+
+    String addDigit(int val){
+        String s = val+"";
+      //  Log.d("Len: ","Value: "+s+", Length: "+s.length());
+        if(s.length() == 1){
+            return "0"+s;
+        } else {
+            return s+"";
         }
     }
 
